@@ -1,0 +1,51 @@
+version: "3.9"
+
+# ── LexRAG Local Dev Stack ──────────────────────────────────────────────────────
+# Run: docker compose up -d
+# This starts Qdrant + Redis. Your Python code runs outside Docker during dev.
+# For full production deploy (including FastAPI + Streamlit), see Phase 6.
+
+services:
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: lexrag_qdrant
+    ports:
+      - "6333:6333"   # REST API (used by qdrant-client)
+      - "6334:6334"   # gRPC API (optional, for high-throughput)
+    volumes:
+      - qdrant_data:/qdrant/storage   # persist vectors between restarts
+    environment:
+      - QDRANT__LOG_LEVEL=INFO
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6333/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: lexrag_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes   # persist cache to disk
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  qdrant_data:
+  redis_data:
+
+# ── COMMANDS ────────────────────────────────────────────────────────────────────
+# Start:         docker compose up -d
+# Stop:          docker compose down
+# Wipe vectors:  docker compose down -v   (removes volumes!)
+# Qdrant UI:     http://localhost:6333/dashboard
+# Redis CLI:     docker exec -it lexrag_redis redis-cli

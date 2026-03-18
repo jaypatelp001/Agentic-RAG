@@ -1,0 +1,22 @@
+# Environment variables
+.env
+
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Dependencies
+venv/
+.env/
+env/
+.venv/
+
+# Data and vectorDB storage
+data/
+qdrant_storage/
+
+# IDE files
+.vscode/
+.idea/

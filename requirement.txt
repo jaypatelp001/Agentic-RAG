@@ -1,0 +1,46 @@
+# ── LexRAG: Agentic Legal RAG System ──────────────────────────────────────────
+
+# LLM & Embeddings
+google-generativeai>=0.7.0          # Gemini LLM + text-embedding-004
+
+# Agent orchestration
+langgraph>=0.2.0                    # Stateful agent graph
+langchain>=0.2.0                    # Base chain utilities
+langchain-google-genai>=1.0.0       # Gemini LangChain integration
+
+# Vector store
+qdrant-client>=1.9.0                # Qdrant vector DB client
+
+# Document loading & parsing
+pymupdf>=1.24.0                     # PDF → text (fitz)
+python-docx>=1.1.0                  # DOCX support (optional)
+
+# Web search fallback (CRAG)
+tavily-python>=0.3.0                # Tavily search API
+
+# Structured DB (Adaptive RAG)
+# sqlite3 is part of Python stdlib — no install needed
+
+# Evaluation
+ragas>=0.1.0                        # RAG evaluation metrics
+datasets>=2.0.0                     # Required by RAGAS
+
+# Tracing & observability
+langfuse>=2.0.0                     # LLM tracing
+
+# Caching
+redis>=5.0.0                        # Redis client
+
+# API
+fastapi>=0.111.0
+uvicorn>=0.30.0
+pydantic>=2.0.0
+
+# UI
+streamlit>=1.35.0
+
+# Utilities
+python-dotenv>=1.0.0                # .env file loading
+tqdm>=4.66.0                        # Progress bars
+loguru>=0.7.0                       # Better logging
+numpy>=1.26.0
